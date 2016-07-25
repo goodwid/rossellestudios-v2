@@ -1,10 +1,9 @@
-import '../src/lib/setup-mongoose';
-import chai from 'chai';
-// import chaiHttp from 'chai-http';
-import app from '../src/lib/app';
-import token from '../src/lib/token';
-import User from '../src/models/user';
-import supertest from 'supertest';
+require ('../src/lib/setup-mongoose');
+const chai = require('chai');
+const app = require('../src/lib/app');
+const token = require('../src/lib/token');
+const User = require('../src/models/user');
+const supertest = require('supertest');
 
 // chai.use(chaiHttp);
 
@@ -33,7 +32,6 @@ describe('integration', () => {
     before('create testAdmin user', (done) => {
       const adminUser = new User(testAdmin);
       adminUser.generateHash(adminUser.password);
-      adminUser.roles.push('admin');
       return adminUser
         .save()
         .then(newUser => {
@@ -80,7 +78,7 @@ describe('integration', () => {
       request
         .post('/api/show')
         .set('authorization', `Bearer ${testAdmin.token}`)
-        .send(mockTheater)
+        .send(mockShow)
         .end((err, res) => {
           if (err) return done(err);
           const result = JSON.parse(res.text);
@@ -100,7 +98,7 @@ describe('integration', () => {
           const result = JSON.parse(res.text);
           testData.id = result._id; // eslint-disable-line
           assert.property(result, '_id');
-          assert.propertyVal(result, 'name', testData.name);
+          assert.propertyVal(result, 'title', testData.title);
           done();
         });
     });
@@ -121,7 +119,7 @@ describe('integration', () => {
     });
 
     it(`PUT to ${url}/:id returns modified data`, (done) => {
-      testData.name = 'newtest';
+      testData.title = 'newtest';
       request
         .put(`${url}/${testData.id}`)
         .set('authorization', `Bearer ${testAdmin.token}`)
@@ -131,7 +129,7 @@ describe('integration', () => {
           const result = JSON.parse(res.text);
           assert.isObject(result);
           assert.propertyVal(result, '_id', testData.id);
-          assert.propertyVal(result, 'name', testData.name);
+          assert.propertyVal(result, 'title', testData.title);
           done();
         });
     });
@@ -147,7 +145,7 @@ describe('integration', () => {
             .get(`${url}/${testData.id}`)
             .end((err, res) => { // eslint-disable-line
               const getResult = JSON.parse(res.text);
-              assert.propertyVal(getResult, 'msg', 'Resource with this ID not found');
+              assert.propertyVal(getResult, 'msg', 'No artwork found');
               done();
             });
         });
@@ -157,10 +155,7 @@ describe('integration', () => {
   describe('show endpoint', () => {
     const url = '/api/show';
     const testData = {
-      attendanceTotal: 30,
-      dateTime: new Date(),
-      admissionsTotal: 400,
-      seats: 30,
+      title: 'testShow'
     };
 
     it(`POST to ${url} completes with id`, (done) => {
@@ -173,7 +168,7 @@ describe('integration', () => {
           const result = JSON.parse(res.text);
           testData.id = result._id; // eslint-disable-line
           assert.property(result, '_id');
-          assert.propertyVal(result, 'seats', testData.seats);
+          assert.propertyVal(result, 'title', testData.title);
           done();
         });
     });
@@ -191,7 +186,7 @@ describe('integration', () => {
     });
 
     it(`PUT to ${url}/:id returns modified data`, (done) => {
-      testData.seats = 40;
+      testData.title = 'foobar';
       request
         .put(`${url}/${testData.id}`)
         .set('authorization', `Bearer ${testAdmin.token}`)
@@ -201,7 +196,7 @@ describe('integration', () => {
           const result = JSON.parse(res.text);
           assert.isObject(result);
           assert.propertyVal(result, '_id', testData.id);
-          assert.propertyVal(result, 'seats', testData.seats);
+          assert.propertyVal(result, 'title', testData.title);
           done();
         });
     });
@@ -217,7 +212,7 @@ describe('integration', () => {
             .get(`${url}/${testData.id}`)
             .end((err, res) => { // eslint-disable-line
               const getResult = JSON.parse(res.text);
-              assert.propertyVal(getResult, 'msg', 'Resource with this ID not found');
+              assert.propertyVal(getResult, 'msg', 'No show found');
               done();
             });
         });

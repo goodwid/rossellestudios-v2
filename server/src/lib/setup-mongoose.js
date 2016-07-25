@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const dbURI = process.env.MONGO_URI;
 
@@ -29,4 +29,4 @@ process.on('SIGINT', () => {
   });
 });
 
-export default mongoose.connection;
+module.exports = mongoose.connection;

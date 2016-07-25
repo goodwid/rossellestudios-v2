@@ -1,13 +1,13 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import isAuth from '../lib/isAuth';
-import token from '../lib/token';
-import User from '../models/user';
+const express = require('express');
+const bodyParser = require('body-parser');
+const isAuth = require('../lib/isAuth');
+const token = require('../lib/token');
+const User = require('../models/user');
 
 const router = express.Router(); // eslint-disable-line
 const jsonParser = bodyParser.json();
 
-router
+module.exports = router
   // Verify user
   .get('/verify', isAuth, (req, res) => {
     res.json({
@@ -89,5 +89,3 @@ router
       })
       .catch(next);
   });
-
-export default router;

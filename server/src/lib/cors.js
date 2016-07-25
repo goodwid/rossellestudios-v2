@@ -1,4 +1,4 @@
-export default function cors(url) {
+module.exports = (url) => {
   return (req, res, next) => {
     res.header({
       'Access-Control-Allow-Origin': url,
@@ -9,4 +9,4 @@ export default function cors(url) {
 
     next();
   };
-}
+};

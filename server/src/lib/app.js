@@ -1,8 +1,9 @@
-import express from 'express';
-import morgan from 'morgan';
-import cors from './cors';
-import auth from '../routes/auth';
-import artworks from '../routes/artworks';
+const express = require('express');
+const morgan = require('morgan');
+const cors = require('./cors');
+const auth = require('../routes/auth');
+const artworks = require('../routes/artworks');
+const shows = require('../routes/shows');
 
 
 const app = express();
@@ -14,12 +15,13 @@ app.use('/api/artwork', artworks);
 app.use('/api/show', shows);
 
 app.use((err, req, res, next) => { // eslint-disable-line
-  if (!process.env.TEST) console.error(err); // eslint-disable-line
-  res.status(err.code || 500).json({
-    code: 500,
+  let code = err.code || 500;
+  if (!process.env.TEST) console.error(err);
+  res.status(code).json({
+    code,
     error: err.error || 'Server error',
     msg: err.msg,
   });
 });
 
-export default app;
+module.exports = app;

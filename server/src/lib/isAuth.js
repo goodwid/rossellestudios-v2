@@ -1,6 +1,6 @@
-import tokenCheck from './token';
+const tokenCheck = require('./token');
 
-export default function isAuth(req, res, next) {
+module.exports = (req, res, next) => {
   if (req.method === 'OPTIONS') return next();
 
   const authHeader = req.headers.authorization;
@@ -24,4 +24,4 @@ export default function isAuth(req, res, next) {
         error: 'Invalid token',
       });
     });
-}
+};

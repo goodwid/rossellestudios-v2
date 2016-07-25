@@ -1,5 +1,5 @@
-import './lib/setup-mongoose';
-import app from './lib/app';
+require ('./lib/setup-mongoose');
+const app = require('./lib/app');
 
 app.listen(process.env.PORT, err => {
   if (err) return console.error(err);

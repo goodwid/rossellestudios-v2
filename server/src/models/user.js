@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const Schema = mongoose.Schema;
 
@@ -25,7 +25,7 @@ userSchema.methods.compareHash = function generateHash(password) {
 
 const User = mongoose.model('User', userSchema);
 
-export default User;
+module.exports = User;
 
 // TODO: create script to run this code before npm start (prestart in scripts of package.json)?
 // create new Admin user if there are no users in the collection

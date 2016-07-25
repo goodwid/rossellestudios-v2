@@ -1,12 +1,12 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import Artwork from '../models/artwork';
-import isAuth from '../lib/isAuth';
+const express = require('express');
+const bodyParser = require('body-parser');
+const Artwork = require('../models/artwork');
+const isAuth = require('../lib/isAuth');
 
 const router = express.Router(); // eslint-disable-line
 const jsonParser = bodyParser.json();
 
-router
+module.exports = router
   .get('/', (req, res, next) => {
     Artwork
       .find()
@@ -68,7 +68,8 @@ router
 
   })
   .delete('/:id', isAuth, jsonParser, (req, res, next) => {
-    artwork.findByIdAndRemove(req.params.id)
+    Artwork
+      .findByIdAndRemove(req.params.id)
       .then(artwork => {
         if (artwork) res.json(artwork);
         else next({code: 404, msg: 'No artwork found'});

@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+const jwt = require('jsonwebtoken');
 
 const superSecret = process.env.APP_SECRET;
 
@@ -7,7 +7,7 @@ if (!superSecret) {
   process.exit(1);
 }
 
-export default {
+module.exports = {
   sign(user) {
     return new Promise((resolve, reject) => {
       jwt.sign({

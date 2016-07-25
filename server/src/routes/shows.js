@@ -1,12 +1,12 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import Show from '../models/show';
-import isAuth from '../lib/isAuth';
+const express = require('express');
+const bodyParser = require('body-parser');
+const isAuth = require('../lib/isAuth');
+const Show = require('../models/show');
 
 const router = express.Router(); // eslint-disable-line
 const jsonParser = bodyParser.json();
 
-router
+module.exports = router
   .get('/', (req, res, next) => {
     Show
       .find()
@@ -68,7 +68,8 @@ router
 
   })
   .delete('/:id', isAuth, jsonParser, (req, res, next) => {
-    show.findByIdAndRemove(req.params.id)
+    Show
+      .findByIdAndRemove(req.params.id)
       .then(show => {
         if (show) res.json(show);
         else next({code: 404, msg: 'No show found'});
