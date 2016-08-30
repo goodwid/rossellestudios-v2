@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
-
+const Artwork = require('./artwork');
 const Schema = mongoose.Schema;
 
-const showSchema = new Schema({
+const show = new Schema({
   title: {
     type: String,
     required: true,
@@ -12,7 +12,23 @@ const showSchema = new Schema({
   },
   location: {
     type: String,
-  }
+  },
+  artworks: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Artwork'
+  }]
 });
 
-module.exports = mongoose.model('Show', showSchema);
+// show.statics.getFullDetail = function (id) {
+//   Promise.all([
+//     this.findById(id).lean(),
+//     Show.find({showId: id}).lean()
+//   ])
+//   .then(results => {
+//     const artworks = results[0];
+//     const show = results[1];
+//
+//   })
+// }
+
+module.exports = mongoose.model('Show', show);

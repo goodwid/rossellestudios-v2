@@ -88,4 +88,15 @@ module.exports = router
           }));
       })
       .catch(next);
+  })
+  .delete('/users/:id', isAuth, (req, res, next) => {
+    User.findByIdAndRemove(req.params.id)
+    .then(result => res.json(result))
+    .catch(err => {
+      next({
+        code: 500,
+        msg: 'unable to delete user',
+        error: err
+      });
+    });
   });

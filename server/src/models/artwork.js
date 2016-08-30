@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const artworkSchema = new Schema({
+const artwork = new Schema({
   title: {
     type: String,
     required: true,
@@ -10,17 +10,17 @@ const artworkSchema = new Schema({
   year:{
     type: Number,
   },
-  media: [{
+  media: {
     type: String,
-  }],
+  },
   url:{
     type: String,
     required: true,
   },
-  show: {
+  showId: {
     type: Schema.Types.ObjectId,
     ref: 'Show'
   }
 });
 
-module.exports = mongoose.model('Artwork', artworkSchema);
+module.exports = mongoose.model('Artwork', artwork);

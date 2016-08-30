@@ -1,8 +1,8 @@
-require ('../src/lib/setup-mongoose');
+require ('../../src/lib/setup-mongoose');
 const chai = require('chai');
-const app = require('../src/lib/app');
-const token = require('../src/lib/token');
-const User = require('../src/models/user');
+const app = require('../../src/lib/app');
+const token = require('../../src/lib/token');
+const User = require('../../src/models/user');
 const supertest = require('supertest');
 
 // chai.use(chaiHttp);
@@ -229,14 +229,14 @@ describe('integration', () => {
 
   after('delete testuser1', (done) => {
     request
-      .delete(`/api/users/${testUser1.id}`)
+      .delete(`/users/${testUser1.id}`)
       .set('authorization', `Bearer ${testAdmin.token}`)
       .end(done);
   });
 
   after('delete testAdmin', (done) => {
     request
-      .delete(`/api/users/${testAdmin.id}`)
+      .delete(`/users/${testAdmin.id}`)
       .set('authorization', `Bearer ${testAdmin.token}`)
       .end(done);
   });
