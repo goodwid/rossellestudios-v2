@@ -2,10 +2,10 @@
   "name": "rosselle-studios-api-server",
   "version": "1.0.0",
   "description": "API server for rossellestudios.com client",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "start": "node index.js",
-    "start:watch": "nodemon index.js",
+    "start": "node src/index.js",
+    "start:watch": "nodemon src/index.js",
     "test": "TEST=true mocha --recursive",
     "test:watch": "TEST=true mocha --recursive -w",
     "test:int": "TEST=true mocha test/integration",
